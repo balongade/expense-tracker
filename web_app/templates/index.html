@@ -85,7 +85,7 @@
                 <td>{{ exp.Date }}</td>
                 <td>{{ exp.Type }}</td>
                 <td>{{ exp.Category }}</td>
-                <td>₱{{ "%.2f"|format(exp.Amount) }}</td>
+                <td>₱{{ "{:,.2f}".format(exp.Amount) }}</td>
                 <td>{{ exp.Description }}</td>
                 <td>
                   <div class="dropdown">
