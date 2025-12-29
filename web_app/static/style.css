@@ -1,0 +1,21 @@
+/* Make table cells consistent */
+.table-fixed th,
+.table-fixed td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Narrow # column */
+.col-index {
+    width: 5%;
+}
+
+/* Equal widths for other columns */
+.col-date,
+.col-type,
+.col-category,
+.col-amount,
+.col-description,
+.col-action {
+    width: 15%;
+}

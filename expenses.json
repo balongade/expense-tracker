@@ -1,0 +1,114 @@
+[
+    {
+        "id": "6757c701-0a25-4844-8f68-0d3f563b90c4",
+        "Amount": 1000.0,
+        "Category": "Partner Savings",
+        "Description": "Marriage",
+        "Date": "December 29, 2025",
+        "Type": "Savings"
+    },
+    {
+        "id": "4696fedc-e1af-4607-a2b2-a3a11bf73d73",
+        "Amount": 1000.0,
+        "Category": "Stocks",
+        "Description": "Funds",
+        "Date": "January 16, 2025",
+        "Type": "Savings"
+    },
+    {
+        "id": "efc7ebac-ea13-433c-b358-fe8fec172802",
+        "Amount": 500.0,
+        "Category": "Wants",
+        "Description": "test",
+        "Date": "November 12, 2025",
+        "Type": "Spending"
+    },
+    {
+        "id": "09d80382-cb5d-4925-8582-e272762929f1",
+        "Amount": 1000.0,
+        "Category": "Groceries",
+        "Description": "test",
+        "Date": "September 17, 2025",
+        "Type": "Spending"
+    },
+    {
+        "id": "2307bd66-d29e-46a8-ac93-bf8153b9b527",
+        "Amount": 1000.0,
+        "Category": "Japan Trip",
+        "Description": "test",
+        "Date": "August 20, 2025",
+        "Type": "Savings"
+    },
+    {
+        "id": "be9fc597-e2ea-4f50-a501-107bd3457114",
+        "Amount": 200.0,
+        "Category": "Emergency Fund",
+        "Description": "test",
+        "Date": "July 23, 2025",
+        "Type": "Savings"
+    },
+    {
+        "id": "054c283a-687a-469c-850b-9fd2211b96d0",
+        "Amount": 1000.0,
+        "Category": "Emergency Fund",
+        "Description": "test",
+        "Date": "June 11, 2025",
+        "Type": "Savings"
+    },
+    {
+        "id": "28e14e2d-3a01-4822-a3d8-cab6546eefde",
+        "Amount": 1000.0,
+        "Category": "Medicines",
+        "Description": "test",
+        "Date": "May 21, 2025",
+        "Type": "Spending"
+    },
+    {
+        "id": "d39b1339-57b8-4f22-814b-2b5a31a4fcc9",
+        "Amount": 1500.0,
+        "Category": "Gym",
+        "Description": "test",
+        "Date": "April 17, 2025",
+        "Type": "Spending"
+    },
+    {
+        "id": "dd98db62-6628-45b1-9668-2ade6f5d6402",
+        "Amount": 1000.0,
+        "Category": "Dental",
+        "Description": "test",
+        "Date": "March 29, 2025",
+        "Type": "Spending"
+    },
+    {
+        "id": "d8a29c76-099d-4355-b0b5-09ab5efee057",
+        "Amount": 1000.0,
+        "Category": "Gas",
+        "Description": "test",
+        "Date": "February 20, 2025",
+        "Type": "Spending"
+    },
+    {
+        "id": "d1e519ba-ee1b-4561-8135-e0e58e9c7614",
+        "Amount": 1500.0,
+        "Category": "Emergency Fund",
+        "Description": "test",
+        "Date": "May 26, 2025",
+        "Type": "Savings"
+    },
+    {
+        "id": "753296ee-febb-4e2f-91d4-636bcd8a2b27",
+        "Amount": 900.0,
+        "Category": "Rice",
+        "Description": "test",
+        "Date": "July 18, 2025",
+        "Type": "Spending"
+    },
+    {
+        "id": "2878a3da-2baf-4fee-ba42-6c5ee8337642",
+        "Amount": 1200.0,
+        "Category": "Internet",
+        "Description": "test",
+        "Date": "November 20, 2025",
+        "Type": "Spending"
+    }
+]
