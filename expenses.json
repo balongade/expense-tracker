@@ -96,14 +96,6 @@
         "Type": "Spending"
     },
     {
-        "id": "2878a3da-2baf-4fee-ba42-6c5ee8337642",
-        "Amount": 1200.0,
-        "Category": "Internet",
-        "Description": "test",
-        "Date": "November 20, 2025",
-        "Type": "Spending"
-    },
-    {
         "id": "8dbe4dbc-964f-4de3-8dc4-45f3075f6f6d",
         "Amount": 499.0,
         "Category": "Emergency Fund",
@@ -112,11 +104,11 @@
         "Type": "Savings"
     },
     {
-        "id": "3bc4ecfd-afb2-41ac-bfcd-9454780f1215",
-        "Amount": 500.0,
-        "Category": "Groceries",
-        "Description": "sample of long description",
+        "id": "e2807b68-e46a-4c58-a99a-f01d13d1ec26",
+        "Amount": 1000.0,
+        "Category": "Partner Savings",
+        "Description": "test",
         "Date": "December 29, 2025",
-        "Type": "Spending"
+        "Type": "Savings"
     }
 ]
