@@ -18,3 +18,55 @@ A simple, responsive expense tracking web app built with Flask. Add, edit, delet
 - Bootstrap 5
 - Chart.js
 - Jinja2 templates
+
+## 📦 Project Structure
+
+```
+web_app/
+├── app.py
+├── utils.py
+├── config.py
+├── expenses.json         # Local data store (ignored in Git)
+├── requirements.txt
+├── README.md
+│
+├── templates/
+│   ├── base.html
+│   ├── index.html
+│   ├── add.html
+│   └── edit.html
+│
+├── static/
+│   ├── style.css
+│   └── app.js
+```
+
+## ⚙️ Setup Instructions
+
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/balongade/expense-tracker.git
+   cd expense-tracker/web_app
+   ```
+
+2. Create a virtual environment:
+   ```bash
+   python -m venv venv
+   venv\Scripts\activate   # On Windows
+   ```
+
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Run the app:
+   ```bash
+   python app.py
+   ```
+
+5. Visit `http://127.0.0.1:5000` in your browser.
+
+## 📄 License
+
+This project is open-source under the MIT License.
