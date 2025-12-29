@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
-from datetime import datetime, date
+from datetime import datetime
 from config import CATEGORY_OPTIONS
-from utils import parse_date, format_date, paginate, aggregate_data  # keep only non‑JSON helpers
+from utils import paginate, aggregate_data
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -20,7 +20,7 @@ class Expense(db.Model):
     date = db.Column(db.Date, nullable=False)
 
     def __repr__(self):
-        return f"<Expense {self.description} ₱{self.amount:.2f}>"
+        return f"<Expense id={self.id} {self.description} ₱{self.amount:.2f}>"
 
 with app.app_context():
     db.create_all()
@@ -55,16 +55,15 @@ def index():
 def add():
     if request.method == "POST":
         new_expense = Expense(
-            description=request.form["description"],
-            category=request.form["category"],
-            type=request.form["type"],
-            amount=float(request.form["amount"]),
-            date=datetime.strptime(request.form["date"], "%Y-%m-%d")
+            description=request.form.get("description", "").strip(),
+            category=request.form.get("category", "").strip(),
+            type=request.form.get("type", "").strip(),
+            amount=float(request.form.get("amount", 0) or 0),
+            date=datetime.strptime(request.form.get("date", datetime.now().strftime("%Y-%m-%d")), "%Y-%m-%d")
         )
         db.session.add(new_expense)
         db.session.commit()
         return redirect(url_for("index"))
-
     today = datetime.now().strftime("%Y-%m-%d")
     return render_template("add.html", today=today, category_options=CATEGORY_OPTIONS)
 
@@ -72,11 +71,13 @@ def add():
 def edit(id):
     expense = Expense.query.get_or_404(id)
     if request.method == "POST":
-        expense.date = datetime.strptime(request.form["date"], "%Y-%m-%d")
-        expense.type = request.form["type"]
-        expense.category = request.form["category"]
-        expense.amount = float(request.form["amount"])
-        expense.description = request.form["description"]
+        expense.date = datetime.strptime(
+            request.form.get("date", datetime.now().strftime("%Y-%m-%d")), "%Y-%m-%d"
+        )
+        expense.type = request.form.get("type", expense.type).strip()
+        expense.category = request.form.get("category", expense.category).strip()
+        expense.amount = float(request.form.get("amount", expense.amount) or 0)
+        expense.description = request.form.get("description", expense.description).strip()
         db.session.commit()
         return redirect(url_for("index"))
     return render_template("edit.html", expense=expense, category_options=CATEGORY_OPTIONS)
@@ -90,15 +91,16 @@ def delete(id):
 
 @app.route("/delete_all")
 def delete_all():
-    Expense.query.delete()
+    db.session.query(Expense).delete()
     db.session.commit()
     return redirect(url_for("index"))
 
 @app.template_filter("datetimeformat")
 def datetimeformat(value, fmt="%B %d, %Y"):
-    if isinstance(value, (datetime, date)):
+    try:
         return value.strftime(fmt)
-    return value
+    except Exception:
+        return value
 
 if __name__ == "__main__":
     app.run(debug=True)
