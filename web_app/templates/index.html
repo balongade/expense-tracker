@@ -18,58 +18,11 @@
 </div>
 
 <script>
-    const ctx = document.getElementById('typeChart').getContext('2d');
-    const typeChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: {{ months|tojson }},
-            datasets: [
-                {
-                    label: 'Savings',
-                    data: {{ savings_data|tojson }},
-                    borderColor: 'blue',
-                    backgroundColor: 'rgba(0, 0, 255, 0.2)',
-                    fill: true,
-                    tension: 0.3
-                },
-                {
-                    label: 'Spending',
-                    data: {{ spending_data|tojson }},
-                    borderColor: 'green',
-                    backgroundColor: 'rgba(0, 128, 0, 0.2)',
-                    fill: true,
-                    tension: 0.3
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { position: 'top' },
-                datalabels: {
-                    color: '#7f7f7f',
-                    align: 'top',
-                    formatter: function(value, context) {
-                        const monthIndex = context.dataIndex;
-                        const savings = {{ savings_data|tojson }}[monthIndex];
-                        const spending = {{ spending_data|tojson }}[monthIndex];
-                        const total = savings + spending;
-                        if (total === 0) return '';
-                        const percent = Math.round((value / total) * 100);
-                        return percent + '%';
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: { callback: value => '₱' + value }
-                }
-            }
-        },
-        plugins: [ChartDataLabels]
-    });
+  const chartData = {
+    months: {{ months|tojson }},
+    savings: {{ savings_data|tojson }},
+    spending: {{ spending_data|tojson }}
+  };
 </script>
 
 <!-- Table -->

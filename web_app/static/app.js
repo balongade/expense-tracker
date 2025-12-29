@@ -1,4 +1,4 @@
-// static/app.js
+// Reset Category
 function resetCategory(categorySelect) {
     categorySelect.innerHTML = "";
     const defaultOpt = document.createElement("option");
@@ -44,7 +44,7 @@ function enableDatePickerOnClick(inputId) {
         this.showPicker && this.showPicker();
     });
 }
-// app.js
+// Single Delete Modal
 document.addEventListener('DOMContentLoaded', () => {
   const confirmDeleteModal = document.getElementById('confirmDeleteModal');
   confirmDeleteModal.addEventListener('show.bs.modal', function (event) {
@@ -57,5 +57,61 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('deleteAmount').textContent = amount;
     // Update confirm button link
     document.getElementById('deleteConfirmBtn').href = `/delete/${expId}`;
+  });
+});
+// Chart.js
+document.addEventListener('DOMContentLoaded', () => {
+  const ctx = document.getElementById('typeChart');
+  if (!ctx) return; // safeguard if chart not present on some pages
+  const typeChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: chartData.months,
+      datasets: [
+        {
+          label: 'Savings',
+          data: chartData.savings,
+          borderColor: 'blue',
+          backgroundColor: 'rgba(0, 0, 255, 0.2)',
+          fill: true,
+          tension: 0.3
+        },
+        {
+          label: 'Spending',
+          data: chartData.spending,
+          borderColor: 'green',
+          backgroundColor: 'rgba(0, 128, 0, 0.2)',
+          fill: true,
+          tension: 0.3
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top' },
+        datalabels: {
+          color: '#7f7f7f',
+          align: 'top',
+          formatter: function(value, context) {
+            const monthIndex = context.dataIndex;
+            const savings = chartData.savings[monthIndex];
+            const spending = chartData.spending[monthIndex];
+            const total = savings + spending;
+            if (total === 0) return '';
+            const percent = Math.round((value / total) * 100);
+            return percent + '%';
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: { callback: value => '₱' + value }
+        }
+      }
+    },
+    plugins: [ChartDataLabels]
   });
 });

@@ -1,13 +1,5 @@
 [
     {
-        "id": "4696fedc-e1af-4607-a2b2-a3a11bf73d73",
-        "Amount": 1000.0,
-        "Category": "Stocks",
-        "Description": "Funds",
-        "Date": "January 16, 2025",
-        "Type": "Savings"
-    },
-    {
         "id": "efc7ebac-ea13-433c-b358-fe8fec172802",
         "Amount": 500.0,
         "Category": "Wants",
@@ -109,6 +101,14 @@
         "Category": "Emergency Fund",
         "Description": "test",
         "Date": "January 15, 2025",
+        "Type": "Savings"
+    },
+    {
+        "id": "a1b06a9c-9e74-47ab-a3f1-43775086698c",
+        "Amount": 1300.0,
+        "Category": "MP2",
+        "Description": "test",
+        "Date": "December 29, 2025",
         "Type": "Savings"
     }
 ]
