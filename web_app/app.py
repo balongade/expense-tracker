@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-from datetime import datetime
+from datetime import datetime, date
 from config import CATEGORY_OPTIONS
 from utils import parse_date, format_date, paginate, aggregate_data  # keep only non‑JSON helpers
 from flask_sqlalchemy import SQLAlchemy
@@ -95,9 +95,9 @@ def delete_all():
     return redirect(url_for("index"))
 
 @app.template_filter("datetimeformat")
-def datetimeformat(value):
-    if isinstance(value, datetime):
-        return value.strftime("%Y-%m-%d")
+def datetimeformat(value, fmt="%B %d, %Y"):
+    if isinstance(value, (datetime, date)):
+        return value.strftime(fmt)
     return value
 
 if __name__ == "__main__":

@@ -38,7 +38,7 @@
             {% for exp in expenses %}
             <tr>
                 <td>{{ (page - 1) * 10 + loop.index }}</td>
-                <td>{{ exp.date.strftime("%Y-%m-%d") }}</td>
+                <td>{{ exp.date|datetimeformat }}</td>
                 <td>{{ exp.type }}</td>
                 <td>{{ exp.category }}</td>
                 <td>₱{{ "{:,.2f}".format(exp.amount) }}</td>
