@@ -110,5 +110,13 @@
         "Description": "test",
         "Date": "November 20, 2025",
         "Type": "Spending"
+    },
+    {
+        "id": "8dbe4dbc-964f-4de3-8dc4-45f3075f6f6d",
+        "Amount": 499.0,
+        "Category": "Emergency Fund",
+        "Description": "test",
+        "Date": "January 15, 2025",
+        "Type": "Savings"
     }
 ]

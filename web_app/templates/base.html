@@ -16,15 +16,27 @@
 <body class="container mt-4">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{{ url_for('index') }}">Expense Tracker</a>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('add') }}">Add Expense</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('delete_all') }}">Delete All</a></li>
-                </ul>
-            </div>
+      <div class="container-fluid">
+        <!-- Brand -->
+        <a class="navbar-brand" href="{{ url_for('index') }}">Expense Tracker</a>
+
+        <!-- Actions for large screens (visible on lg+) -->
+        <div class="d-none d-lg-flex ms-auto">
+          <a class="btn btn-sm btn-success me-2" href="{{ url_for('add') }}">Add Expense</a>
+          <a class="btn btn-sm btn-danger" href="{{ url_for('delete_all') }}">Delete All</a>
         </div>
+
+        <!-- Hamburger dropdown for small screens (visible below lg) -->
+        <div class="dropdown d-lg-none ms-auto">
+          <button class="navbar-toggler" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="{{ url_for('add') }}">Add Expense</a></li>
+            <li><a class="dropdown-item text-danger" href="{{ url_for('delete_all') }}">Delete All</a></li>
+          </ul>
+        </div>
+      </div>
     </nav>
 
     <!-- Page Content -->
