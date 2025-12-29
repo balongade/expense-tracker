@@ -1,15 +1,18 @@
 {% extends "base.html" %}
 {% block title %}Expenses{% endblock %}
-
 {% block content %}
-<h3>Total: ₱{{ total }}</h3>
 
 <!-- Chart -->
 <div class="card my-4">
-    <div class="card-header">Savings vs Spending</div>
-    <div class="card-body">
-        <canvas id="typeChart"></canvas>
-    </div>
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <span>Savings vs Spending</span>
+    <span class="fw-bold text-primary">
+      Total: ₱{{ "{:,.2f}".format(total) }}
+    </span>
+  </div>
+  <div class="card-body">
+    <canvas id="typeChart"></canvas>
+  </div>
 </div>
 
 <script>
