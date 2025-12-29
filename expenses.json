@@ -1,13 +1,5 @@
 [
     {
-        "id": "6757c701-0a25-4844-8f68-0d3f563b90c4",
-        "Amount": 1000.0,
-        "Category": "Partner Savings",
-        "Description": "Marriage",
-        "Date": "December 29, 2025",
-        "Type": "Savings"
-    },
-    {
         "id": "4696fedc-e1af-4607-a2b2-a3a11bf73d73",
         "Amount": 1000.0,
         "Category": "Stocks",
@@ -25,7 +17,7 @@
     },
     {
         "id": "09d80382-cb5d-4925-8582-e272762929f1",
-        "Amount": 1000.0,
+        "Amount": 1100.0,
         "Category": "Groceries",
         "Description": "test",
         "Date": "September 17, 2025",

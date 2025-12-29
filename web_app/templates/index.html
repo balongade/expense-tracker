@@ -88,8 +88,20 @@
                 <td>₱{{ "%.2f"|format(exp.Amount) }}</td>
                 <td>{{ exp.Description }}</td>
                 <td>
-                    <a href="{{ url_for('edit', id=exp.id) }}" class="btn btn-sm btn-primary">Edit</a>
-                    <a href="{{ url_for('delete', id=exp.id) }}" class="btn btn-sm btn-danger">Delete</a>
+                  <div class="dropdown">
+                    <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="actionMenu{{ exp.id }}"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="bi bi-three-dots-vertical"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="actionMenu{{ exp.id }}">
+                      <li>
+                        <a class="dropdown-item" href="{{ url_for('edit', id=exp.id) }}">Edit</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item text-danger" href="{{ url_for('delete', id=exp.id) }}">Delete</a>
+                      </li>
+                    </ul>
+                  </div>
                 </td>
             </tr>
             {% endfor %}
