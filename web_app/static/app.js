@@ -1,5 +1,4 @@
 // static/app.js
-
 function resetCategory(categorySelect) {
     categorySelect.innerHTML = "";
     const defaultOpt = document.createElement("option");
@@ -7,7 +6,6 @@ function resetCategory(categorySelect) {
     defaultOpt.textContent = "-- Select Category --";
     categorySelect.appendChild(defaultOpt);
 }
-
 function populateCategories(typeSelect, categorySelect, categoryOptions, selectedCategory = null) {
     categorySelect.innerHTML = "";
     if (typeSelect.value && categoryOptions[typeSelect.value]) {
@@ -24,7 +22,6 @@ function populateCategories(typeSelect, categorySelect, categoryOptions, selecte
         resetCategory(categorySelect);
     }
 }
-
 function initCategorySelector(typeSelectId, categorySelectId, categoryOptions, selectedCategory = null) {
     const typeSelect = document.getElementById(typeSelectId);
     const categorySelect = document.getElementById(categorySelectId);
@@ -35,7 +32,6 @@ function initCategorySelector(typeSelectId, categorySelectId, categoryOptions, s
         populateCategories(typeSelect, categorySelect, categoryOptions);
     });
 }
-
 function enableDatePickerOnClick(inputId) {
     const dateInput = document.getElementById(inputId);
     if (!dateInput) return;
@@ -48,3 +44,18 @@ function enableDatePickerOnClick(inputId) {
         this.showPicker && this.showPicker();
     });
 }
+// app.js
+document.addEventListener('DOMContentLoaded', () => {
+  const confirmDeleteModal = document.getElementById('confirmDeleteModal');
+  confirmDeleteModal.addEventListener('show.bs.modal', function (event) {
+    const button = event.relatedTarget;
+    const expId = button.getAttribute('data-id');
+    const description = button.getAttribute('data-description');
+    const amount = button.getAttribute('data-amount');
+    // Fill modal content
+    document.getElementById('deleteDescription').textContent = description;
+    document.getElementById('deleteAmount').textContent = amount;
+    // Update confirm button link
+    document.getElementById('deleteConfirmBtn').href = `/delete/${expId}`;
+  });
+});
