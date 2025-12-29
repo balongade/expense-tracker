@@ -10,9 +10,11 @@
       Total: ₱{{ "{:,.2f}".format(total) }}
     </span>
   </div>
-  <div class="card-body">
-    <canvas id="typeChart"></canvas>
-  </div>
+    <div class="card-body">
+      <div style="position: relative; height:40vh; width:100%">
+        <canvas id="typeChart"></canvas>
+      </div>
+    </div>
 </div>
 
 <script>
@@ -42,6 +44,7 @@
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             plugins: {
                 legend: { position: 'top' },
                 datalabels: {

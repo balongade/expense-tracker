@@ -110,5 +110,13 @@
         "Description": "test",
         "Date": "January 15, 2025",
         "Type": "Savings"
+    },
+    {
+        "id": "3bc4ecfd-afb2-41ac-bfcd-9454780f1215",
+        "Amount": 500.0,
+        "Category": "Groceries",
+        "Description": "sample of long description",
+        "Date": "December 29, 2025",
+        "Type": "Spending"
     }
 ]
