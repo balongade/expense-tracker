@@ -1,4 +1,3 @@
-Flask>=2.3.0
-Jinja2>=3.1.0
-Werkzeug>=2.3.0
-# Chart.js is a frontend JavaScript library and should be included via CDN in HTML templates
+flask==3.0.2
+flask_sqlalchemy==3.1.1
+gunicorn==21.2.0
