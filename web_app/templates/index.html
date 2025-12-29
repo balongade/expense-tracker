@@ -38,11 +38,11 @@
             {% for exp in expenses %}
             <tr>
                 <td>{{ (page - 1) * 10 + loop.index }}</td>
-                <td>{{ exp.Date }}</td>
-                <td>{{ exp.Type }}</td>
-                <td>{{ exp.Category }}</td>
-                <td>₱{{ "{:,.2f}".format(exp.Amount) }}</td>
-                <td>{{ exp.Description }}</td>
+                <td>{{ exp.date.strftime("%Y-%m-%d") }}</td>
+                <td>{{ exp.type }}</td>
+                <td>{{ exp.category }}</td>
+                <td>₱{{ "{:,.2f}".format(exp.amount) }}</td>
+                <td>{{ exp.description }}</td>
                 <td>
                   <div class="dropdown">
                     <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="actionMenu{{ exp.id }}"
@@ -59,8 +59,8 @@
                                 data-bs-toggle="modal"
                                 data-bs-target="#confirmDeleteModal"
                                 data-id="{{ exp.id }}"
-                                data-description="{{ exp.Description }}"
-                                data-amount="{{ "{:,.2f}".format(exp.Amount) }}">
+                                data-description="{{ exp.description }}"
+                                data-amount="{{ "{:,.2f}".format(exp.amount) }}">
                           Delete
                         </button>
                       </li>

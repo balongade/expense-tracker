@@ -1,27 +1,6 @@
-import json
-import os
 from datetime import datetime
 from collections import defaultdict
 from math import ceil
-
-# Point to the shared expenses.json in project root
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_FILE = os.path.join(BASE_DIR, "expenses.json")
-
-def load_expenses():
-    """Load expenses from JSON file, return as list."""
-    if not os.path.exists(DATA_FILE):
-        return []
-    try:
-        with open(DATA_FILE, "r") as f:
-            return json.load(f)
-    except json.JSONDecodeError:
-        return []
-
-def save_expenses(expenses):
-    """Save expenses list back to JSON file."""
-    with open(DATA_FILE, "w") as f:
-        json.dump(expenses, f, indent=4)  # indent=4 makes it human-readable
 
 # -----------------------------
 # Helpers
@@ -51,14 +30,14 @@ def aggregate_data(expenses):
     monthly_totals = defaultdict(lambda: {"Savings": 0, "Spending": 0})
 
     for exp in expenses:
-        amount = exp["Amount"]
+        amount = exp.amount
         total += amount
-        categories[exp["Category"]] += amount
+        categories[exp.category] += amount
 
-        dt = parse_date(exp["Date"])
+        dt = exp.date
         if dt:
             month_label = dt.strftime("%b %Y")
-            monthly_totals[month_label][exp["Type"]] += amount
+            monthly_totals[month_label][exp.type] += amount
 
     months = sorted(monthly_totals.keys(), key=lambda m: datetime.strptime(m, "%b %Y"))
     savings_data = [monthly_totals[m]["Savings"] for m in months]

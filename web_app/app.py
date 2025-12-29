@@ -1,31 +1,36 @@
 from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime
-import uuid
 from config import CATEGORY_OPTIONS
-from utils import (
-    load_expenses,
-    save_expenses,
-    parse_date,
-    format_date,
-    paginate,
-    aggregate_data
-)
+from utils import parse_date, format_date, paginate, aggregate_data  # keep only non‑JSON helpers
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///expenses.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
+class Expense(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String(200), nullable=False)
+    category = db.Column(db.String(100), nullable=False)
+    type = db.Column(db.String(50), nullable=False)
+    amount = db.Column(db.Float, nullable=False)
+    date = db.Column(db.Date, nullable=False)
+
+    def __repr__(self):
+        return f"<Expense {self.description} ₱{self.amount:.2f}>"
+
+with app.app_context():
+    db.create_all()
 
 # -----------------------------
 # Routes
 # -----------------------------
 @app.route("/")
 def index():
-    expenses = load_expenses()
-
-    # Sort by Date (newest first)
-    expenses.sort(
-        key=lambda exp: parse_date(exp["Date"]) or datetime.min,
-        reverse=True
-    )
+    expenses = Expense.query.order_by(Expense.date.desc()).all()
 
     # Aggregations
     total, categories, months, savings_data, spending_data = aggregate_data(expenses)
@@ -49,55 +54,51 @@ def index():
 @app.route("/add", methods=["GET", "POST"])
 def add():
     if request.method == "POST":
-        expense = {
-            "id": str(uuid.uuid4()),
-            "Amount": float(request.form["amount"]),
-            "Category": request.form["category"],
-            "Description": request.form["description"],
-            "Date": format_date(datetime.strptime(request.form["date"], "%Y-%m-%d")),
-            "Type": request.form["type"]
-        }
-        expenses = load_expenses()
-        expenses.append(expense)
-        save_expenses(expenses)
+        new_expense = Expense(
+            description=request.form["description"],
+            category=request.form["category"],
+            type=request.form["type"],
+            amount=float(request.form["amount"]),
+            date=datetime.strptime(request.form["date"], "%Y-%m-%d")
+        )
+        db.session.add(new_expense)
+        db.session.commit()
         return redirect(url_for("index"))
 
     today = datetime.now().strftime("%Y-%m-%d")
     return render_template("add.html", today=today, category_options=CATEGORY_OPTIONS)
 
-@app.route("/edit/<id>", methods=["GET", "POST"])
+@app.route("/edit/<int:id>", methods=["GET", "POST"])
 def edit(id):
-    expenses = load_expenses()
-    for exp in expenses:
-        if exp["id"] == id:
-            if request.method == "POST":
-                exp.update({
-                    "Date": format_date(datetime.strptime(request.form["date"], "%Y-%m-%d")),
-                    "Category": request.form["category"],
-                    "Amount": float(request.form["amount"]),
-                    "Description": request.form["description"],
-                    "Type": request.form["type"]
-                })
-                save_expenses(expenses)
-                return redirect(url_for("index"))
-            return render_template("edit.html", expense=exp, category_options=CATEGORY_OPTIONS)
-    return redirect(url_for("index"))
+    expense = Expense.query.get_or_404(id)
+    if request.method == "POST":
+        expense.date = datetime.strptime(request.form["date"], "%Y-%m-%d")
+        expense.type = request.form["type"]
+        expense.category = request.form["category"]
+        expense.amount = float(request.form["amount"])
+        expense.description = request.form["description"]
+        db.session.commit()
+        return redirect(url_for("index"))
+    return render_template("edit.html", expense=expense, category_options=CATEGORY_OPTIONS)
 
-@app.template_filter("datetimeformat")
-def datetimeformat(value):
-    dt = parse_date(value)
-    return dt.strftime("%Y-%m-%d") if dt else value
-
-@app.route("/delete/<id>")
+@app.route("/delete/<int:id>")
 def delete(id):
-    expenses = [exp for exp in load_expenses() if exp["id"] != id]
-    save_expenses(expenses)
+    expense = Expense.query.get_or_404(id)
+    db.session.delete(expense)
+    db.session.commit()
     return redirect(url_for("index"))
 
 @app.route("/delete_all")
 def delete_all():
-    save_expenses([])  # overwrite with empty list
+    Expense.query.delete()
+    db.session.commit()
     return redirect(url_for("index"))
+
+@app.template_filter("datetimeformat")
+def datetimeformat(value):
+    if isinstance(value, datetime):
+        return value.strftime("%Y-%m-%d")
+    return value
 
 if __name__ == "__main__":
     app.run(debug=True)
