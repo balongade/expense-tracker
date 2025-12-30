@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // -----------------------------
-// Chart.js Initialization
+// Savings vs Spending Chart Initialization
 // -----------------------------
 document.addEventListener("DOMContentLoaded", () => {
   const ctx = document.getElementById("typeChart");
@@ -112,33 +112,36 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       plugins: {
         legend: { position: "top" },
-        datalabels: {
-          color: "#7f7f7f",
-          align: "top",
-          formatter: (value, context) => {
-            const monthIndex = context.dataIndex;
-            const savings = chartData.savings[monthIndex];
-            const spending = chartData.spending[monthIndex];
-            const total = savings + spending;
-            if (total === 0) return "";
-            const percent = Math.round((value / total) * 100);
-            return percent + "%";
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              const monthIndex = context.dataIndex;
+              const savings = chartData.savings[monthIndex];
+              const spending = chartData.spending[monthIndex];
+              const total = savings + spending;
+              if (total === 0) return "";
+              const value = context.raw;
+              const percent = Math.round((value / total) * 100);
+              return `${context.dataset.label}: ${value} (${percent}%)`;
+            },
+            title: function (context) {
+              return chartData.months[context[0].dataIndex];
+            }
           }
         }
       },
       scales: {
-          x: {
-        ticks: {
-          minRotation: 90,
-          maxRotation: 90
-        }
-      },
+        x: {
+          ticks: {
+            minRotation: 90,
+            maxRotation: 90
+          }
+        },
         y: {
           beginAtZero: true,
           ticks: { display: false }
         }
       }
     },
-    plugins: [ChartDataLabels]
   });
 });
