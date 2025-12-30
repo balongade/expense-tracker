@@ -1,61 +1,45 @@
 /* -----------------------------
-   Table Styling
+   Monthly Category Totals Table Styling
 ----------------------------- */
-.table-fixed th,
-.table-fixed td {
-    vertical-align: middle;
-    padding: 0.5rem;
+.table-fix {
+    table-layout: fixed;
 }
-
-/* Column alignment */
+/* -----------------------------
+   Expenses Table Column Alignment
+----------------------------- */
 .col-index {
     width: 5%;
     text-align: center;
 }
-
 .col-date,
 .col-type,
 .col-category {
     width: 15%;
     text-align: center;
 }
-
 .col-amount {
     width: 15%;
-    text-align: right; /* numbers aligned right */
+    text-align: right;
 }
-
 .col-description {
     width: 25%;
-    text-align: left; /* text aligned left */
+    text-align: left;
 }
-
 .col-action {
     width: 10%;
     text-align: center;
 }
-
-/* Hover effect for table rows */
-.table-fixed tbody tr:hover {
-    background-color: #f8f9fa;
-}
-
 /* -----------------------------
    Chart Container
 ----------------------------- */
-.chart-container {
-    position: relative;
-    height: 40vh;
-    width: 100%;
-}
 
+}
 /* -----------------------------
    Pagination Styling
 ----------------------------- */
 .pagination .page-link {
     color: #0d6efd;
 }
-
 .pagination .page-item.active .page-link {
     background-color: #0d6efd;
     border-color: #0d6efd;

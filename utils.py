@@ -1,6 +1,7 @@
 from datetime import datetime, date
 from collections import defaultdict
 from math import ceil
+from calendar import month_name
 
 # -----------------------------
 # Helpers
@@ -50,12 +51,22 @@ def aggregate_data(expenses):
         total += amount
         categories[exp.category] += amount
 
-        month_label = exp.date.strftime("%b %Y")
+        month_label = exp.date.strftime("%B")
         monthly_totals[month_label][exp.type] += amount
 
     # Sort months chronologically
-    months = sorted(monthly_totals.keys(), key=lambda m: datetime.strptime(m, "%b %Y"))
+    months = sorted(monthly_totals.keys(), key=lambda m: list(datetime.strptime(m, "%B").month for m in [m])[0])
     savings_data = [monthly_totals[m]["Savings"] for m in months]
     spending_data = [monthly_totals[m]["Spending"] for m in months]
 
     return total, dict(categories), months, savings_data, spending_data
+
+def get_monthly_category_totals(expenses):
+    # Structure: { 'January': { 'Groceries': 1200.00, 'Gas': 800.00, ... }, ... }
+    monthly_totals = defaultdict(lambda: defaultdict(float))
+
+    for exp in expenses:
+        month = month_name[exp.date.month]  # Converts 1 → 'January'
+        monthly_totals[month][exp.category] += exp.amount
+
+    return monthly_totals

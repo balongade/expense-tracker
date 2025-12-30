@@ -127,9 +127,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       },
       scales: {
+          x: {
+        ticks: {
+          minRotation: 90,
+          maxRotation: 90
+        }
+      },
         y: {
           beginAtZero: true,
-          ticks: { callback: value => "₱" + value }
+          ticks: { display: false }
         }
       }
     },

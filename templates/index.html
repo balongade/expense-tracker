@@ -2,17 +2,56 @@
 {% block title %}Expenses{% endblock %}
 {% block content %}
 
-<!-- Chart -->
-<div class="card my-4">
-  <div class="card-header d-flex justify-content-between align-items-center">
-    <span>Savings vs Spending</span>
-    <span class="fw-bold text-primary">
-      Total: ₱{{ "{:,.2f}".format(total) }}
-    </span>
+<div class="row my-2">
+  <!-- Savings vs Spending Chart -->
+  <div class="col-md-3">
+    <div class="card h-100">
+      <div class="card-header">
+        <span>Savings vs Spending</span>
+      </div>
+      <div class="card-body">
+        <div class="chart-container" style="height:380px;">
+          <canvas id="typeChart"></canvas>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="card-body">
-    <div class="chart-container">
-      <canvas id="typeChart"></canvas>
+
+  <!-- Monthly Category Totals Table -->
+  <div class="col-md-9">
+    <div class="card h-100">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <span>Monthly Category Totals</span>
+        <span class="fw-bold text-primary">
+          Total: ₱{{ "{:,.2f}".format(total) }}
+        </span>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive" style="height:380px;">
+          <table class="table table-bordered table-sm align-middle text-start table-fix" style="font-size:12px;">
+            <thead>
+              <tr class="text-start">
+                <th>Category</th>
+                {% for month in table_months %}
+                  <th>{{ month }}</th>
+                {% endfor %}
+              </tr>
+            </thead>
+            <tbody>
+              {% for category in all_categories %}
+                <tr class="text-start">
+                  <td>{{ category }}</td>
+                  {% for month in table_months %}
+                    <td>
+                      {{ monthly_category_totals.get(month, {}).get(category) or "" }}
+                    </td>
+                  {% endfor %}
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -25,9 +64,9 @@
   };
 </script>
 
-<!-- Table -->
+<!-- Expenses Table -->
 <div class="table-responsive">
-  <table class="table table-striped table-bordered table-fixed align-middle">
+  <table class="table table-striped table-bordered align-middle">
     <thead class="table-light">
       <tr>
         <th scope="col" class="col-index">#</th>
@@ -46,7 +85,7 @@
         <td class="col-date">{{ exp.date|datetimeformat }}</td>
         <td class="col-type">{{ exp.type }}</td>
         <td class="col-category">{{ exp.category }}</td>
-        <td class="col-amount">₱{{ "{:,.2f}".format(exp.amount) }}</td>
+        <td class="col-amount">{{ "{:,.2f}".format(exp.amount) }}</td>
         <td class="col-description">{{ exp.description }}</td>
         <td class="col-action">
           <div class="dropdown">

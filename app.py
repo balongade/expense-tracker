@@ -3,6 +3,8 @@ from datetime import datetime
 from config import CATEGORY_OPTIONS
 from utils import paginate, aggregate_data
 from flask_sqlalchemy import SQLAlchemy
+from collections import defaultdict
+from calendar import month_name
 
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -32,10 +34,25 @@ with app.app_context():
 def index():
     expenses = Expense.query.order_by(Expense.date.desc()).all()
 
-    # Aggregations
+    # --- Existing Aggregations for Chart ---
     total, categories, months, savings_data, spending_data = aggregate_data(expenses)
 
-    # Pagination
+    # --- New Aggregation for Table ---
+    monthly_category_totals = defaultdict(lambda: defaultdict(float))
+    for exp in expenses:
+        month = month_name[exp.date.month]   # e.g. 1 → "January"
+        monthly_category_totals[month][exp.category] += exp.amount
+
+    # Prepare headers for table
+    all_categories = sorted({
+        cat for month in monthly_category_totals.values() for cat in month
+    })
+    table_months = sorted(
+        monthly_category_totals.keys(),
+        key=lambda m: list(month_name).index(m)
+    )
+
+    # --- Pagination ---
     page = int(request.args.get("page", 1))
     paginated_expenses, total_pages = paginate(expenses, page, per_page=10)
 
@@ -48,7 +65,10 @@ def index():
         savings_data=savings_data,
         spending_data=spending_data,
         page=page,
-        total_pages=total_pages
+        total_pages=total_pages,
+        monthly_category_totals=monthly_category_totals,
+        all_categories=all_categories,
+        table_months=table_months
     )
 
 @app.route("/add", methods=["GET", "POST"])
