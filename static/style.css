@@ -4,6 +4,10 @@
 .table-fix {
     table-layout: fixed;
 }
+.card-body {
+    padding: 0.5rem;
+    padding-bottom: 0.01rem;
+}
 /* -----------------------------
    Expenses Table Column Alignment
 ----------------------------- */
@@ -32,8 +36,6 @@
 /* -----------------------------
    Chart Container
 ----------------------------- */
-
-}
 /* -----------------------------
    Pagination Styling
 ----------------------------- */
