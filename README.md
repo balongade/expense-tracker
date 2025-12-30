@@ -4,9 +4,10 @@ A simple, responsive expense tracking web app built with Flask. Add, edit, delet
 
 ## 🚀 Features
 
-- Add, edit, and delete expenses
+- Add, edit, delete and visualize expenses
 - Dynamic category selection based on type (Savings or Spending)
 - Monthly line chart using Chart.js with percentage breakdowns
+- Monthly total Table per Category
 - Pagination with continuous row numbering
 - Clean, responsive Bootstrap layout
 - Modular codebase with `utils.py` and `config.py`
@@ -22,13 +23,14 @@ A simple, responsive expense tracking web app built with Flask. Add, edit, delet
 ## 📦 Project Structure
 
 ```
-web_app/
+expense-tracker/
 ├── app.py
 ├── utils.py
 ├── config.py
-├── expenses.json         # Local data store (ignored in Git)
 ├── requirements.txt
 ├── README.md
+├── .gitignore
+├── Procfile
 │
 ├── templates/
 │   ├── base.html
@@ -46,7 +48,7 @@ web_app/
 1. Clone the repo:
    ```bash
    git clone https://github.com/balongade/expense-tracker.git
-   cd expense-tracker/web_app
+   cd expense-tracker/
    ```
 
 2. Create a virtual environment:
